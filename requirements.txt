@@ -1,3 +1,2 @@
 install os
 install requests
-NASA_API = '9e8aYz6rMMWYbWdaCGKBNHnekugsqO3iAO0o5l8e'
