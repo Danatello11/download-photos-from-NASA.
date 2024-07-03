@@ -5,14 +5,14 @@ import schedule
 from telegram import Bot
 from dotenv import load_dotenv
 
-load_dotenv()
 
-# Получаем токен и ID группы из переменных окружения
-bot_token = os.getenv("BOT_TOKEN")
-group_chat_id = os.getenv("GROUP_CHAT_ID")
-publication_interval = int(os.getenv("PUBLICATION_INTERVAL", 4))  # задержка в часах по умолчанию
+def load_bot_settings():
+    load_dotenv()
+    bot_token = os.getenv("BOT_TOKEN")
+    group_chat_id = os.getenv("GROUP_CHAT_ID")
+    publication_interval = int(os.getenv("PUBLICATION_INTERVAL", 4))
+    return bot_token, group_chat_id, publication_interval
 
-directory = "downloaded_images"
 
 def get_random_images(directory):
     images = []
@@ -33,13 +33,14 @@ def publish_photos():
     while True:
         for image_path in images:
             send_image(bot_token, group_chat_id, image_path, caption="Привет, привет")
-            time.sleep(publication_interval * 3600)  # переводим часы в секунды
-        random.shuffle(images)  # перемешиваем список после публикации всех фото
+            time.sleep(publication_interval * 3600)  
+        random.shuffle(images)  
 
 
 def main():
-    schedule.every(publication_interval).hours.do(publish_photos)
-    while True:
+     bot_token, group_chat_id, publication_interval = load_bot_settings()
+     schedule.every(publication_interval).hours.do(publish_photos)
+     while True:
         schedule.run_pending()
         time.sleep(1)
 

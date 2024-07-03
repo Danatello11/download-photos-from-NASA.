@@ -1,17 +1,20 @@
 import argparse
 import os
 import requests
+from image_utils import download_image
 
-def download_image(url, filename):
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        os.makedirs(os.path.dirname(filename), exist_ok=True)
-        with open(filename, "wb") as file:
-            file.write(response.content)
+
+def save_spacex_images(images, output_folder):
+    if not images:
+        print("No valid images found for this SpaceX launch.")
+        return
+
+    os.makedirs(output_folder, exist_ok=True)
+    print(f"Found {len(images)} images")
+    for index, image_url in enumerate(images):
+        filename = os.path.join(output_folder, f"spacex_{index}.jpg")
+        download_image(image_url, filename)
         print(f"SpaceX image saved: {filename}")
-    except Exception as e:
-        print(f"Error downloading image from {url}: {e}")
 
 def fetch_spacex_last_launch(launch_id=None):
     base_url = "https://api.spacexdata.com/v5/launches"
@@ -20,32 +23,22 @@ def fetch_spacex_last_launch(launch_id=None):
     try:
         response = requests.get(url)
         response.raise_for_status()
-        data = response.json()
-
+        launch_data = response.json()
+        
+        links = launch_data.get("links", {})
         images = []
-        if 'flickr' in data["links"] and data["links"]["flickr"]["original"]:
-            images = data["links"]["flickr"]["original"]
-        elif 'patch' in data["links"] and data["links"]["patch"]["large"]:
-            images = [data["links"]["patch"]["large"]]
-        elif 'patch' in data["links"] and data["links"]["patch"]["small"]:
-            images = [data["links"]["patch"]["small"]]
+        if 'flickr' in links and links["flickr"].get("original"):
+            images = links["flickr"]["original"]
+        elif 'patch' in links and (links["patch"].get("large") or links["patch"].get("small")):
+            images = [links["patch"].get("large") or links["patch"].get("small")]
 
-        if images:
-            print(f"Found {len(images)} images")
-            folder_path = "downloaded_images/spacex"
-            os.makedirs(folder_path, exist_ok=True)
-            for i, image_url in enumerate(images):
-                filename = os.path.join(folder_path, f"spacex_{i}.jpg")
-                download_image(image_url, filename)
-        else:
-            print("No valid images found for this SpaceX launch.")
-    
+        save_spacex_images(images, "downloaded_images/spacex")
     except requests.exceptions.RequestException as e:
         print(f"Error fetching data: {e}")
 
 def main():
     parser = argparse.ArgumentParser(description="Fetch SpaceX launch images")
-    parser.add_argument('--launch_id', help="ID of the SpaceX launch", default=None)
+    parser.add_argument('--launch_id', help="ID of the SpaceX launch", default='latest')
     args = parser.parse_args()
     fetch_spacex_last_launch(args.launch_id)
 
