@@ -56,19 +56,78 @@
 2. **Запуск скрипта для публикации фотографий:**
 
     ```sh
-    telegram_bot.py
+    python publish_photos.py
+    ```
+
+### Примеры запуска скриптов для скачивания фотографий
+
+1. **Скачивание фотографий Земли (EPIC):**
+
+    ```sh
+    python fetch_epic_earth_photos.py --num_photos 5 --output_folder downloaded_images/earth
+    ```
+
+    **Пример вывода:**
+
+    ```plaintext
+    Загрузка переменных окружения из файла .env
+    Фотография Земли 1 сохранена: downloaded_images/earth/earth_photo_1.png
+    Фотография Земли 2 сохранена: downloaded_images/earth/earth_photo_2.png
+    Фотография Земли 3 сохранена: downloaded_images/earth/earth_photo_3.png
+    Фотография Земли 4 сохранена: downloaded_images/earth/earth_photo_4.png
+    Фотография Земли 5 сохранена: downloaded_images/earth/earth_photo_5.png
+    ```
+
+2. **Скачивание фотографий SpaceX:**
+
+    ```sh
+    python fetch_spacex_images.py --launch_id latest
+    ```
+
+    **Пример вывода:**
+
+    ```plaintext
+    Загрузка переменных окружения из файла .env
+    Найдено 10 изображений
+    SpaceX image saved: downloaded_images/spacex/spacex_0.jpg
+    SpaceX image saved: downloaded_images/spacex/spacex_1.jpg
+    SpaceX image saved: downloaded_images/spacex/spacex_2.jpg
+    SpaceX image saved: downloaded_images/spacex/spacex_3.jpg
+    SpaceX image saved: downloaded_images/spacex/spacex_4.jpg
+    SpaceX image saved: downloaded_images/spacex/spacex_5.jpg
+    SpaceX image saved: downloaded_images/spacex/spacex_6.jpg
+    SpaceX image saved: downloaded_images/spacex/spacex_7.jpg
+    SpaceX image saved: downloaded_images/spacex/spacex_8.jpg
+    SpaceX image saved: downloaded_images/spacex/spacex_9.jpg
+    ```
+
+3. **Скачивание фотографий APOD (Astronomy Picture of the Day):**
+
+    ```sh
+    python fetch_nasa_apod.py --count 5 --output_folder downloaded_images/nasa
+    ```
+
+    **Пример вывода:**
+
+    ```plaintext
+    Загрузка переменных окружения из файла .env
+    Фотография NASA 1 сохранена: downloaded_images/nasa/nasa_apod_1.jpg
+    Фотография NASA 2 сохранена: downloaded_images/nasa/nasa_apod_2.jpg
+    Фотография NASA 3 сохранена: downloaded_images/nasa/nasa_apod_3.jpg
+    Фотография NASA 4 сохранена: downloaded_images/nasa/nasa_apod_4.jpg
+    Фотография NASA 5 сохранена: downloaded_images/nasa/nasa_apod_5.jpg
     ```
 
 ### Пример запуска и вывода в консоль
 
 ```sh
-$ telegram_bot.py
+$ python publish_photos.py
 Загрузка переменных окружения из файла .env
 Найдено 10 изображений в директории downloaded_images
 Запуск публикации фотографий с интервалом 4 часа
 Фотография nasa1.jpg успешно опубликована в канал
 Следующая публикация через 4 часа
-```
+
 
 ### Как это работает
 
