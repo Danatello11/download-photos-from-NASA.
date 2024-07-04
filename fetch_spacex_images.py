@@ -21,9 +21,9 @@ def fetch_spacex_last_launch(launch_id=None):
     url = f"{base_url}/{launch_id}" if launch_id else f"{base_url}/latest"
     
     response = requests.get(url)
-    launch_data = response.json()
+    launch = response.json()
     
-    links = launch_data.get("links", {})
+    links = launch.get("links", {})
     images = []
     if 'flickr' in links and links["flickr"].get("original"):
         images = links["flickr"]["original"]

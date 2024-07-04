@@ -5,8 +5,8 @@ import urllib.parse
 from image_utils import download_image
 from image_utils import get_image_extension
 
-def save_earth_photos(epic_images_data, num_photos, output_folder, api_key):
-    if not epic_images_data:
+def save_earth_photos(epic_images, num_photos, output_folder, api_key):
+    if not epic_images:
         print("Не удалось получить данные о фотографиях Земли.")
         return
     
@@ -19,9 +19,9 @@ def save_earth_photos(epic_images_data, num_photos, output_folder, api_key):
     
     response = requests.get(url)
     response.raise_for_status()
-    epic_images_data = response.json()
+    epic_images = response.json()
     
-    for index, image_info in enumerate(epic_images_data[:num_photos], start=1):
+    for index, image_info in enumerate(epic_images[:num_photos], start=1):
         image_date = image_info["date"].split()[0].replace("-", "/")
         image_name = image_info["image"]
         image_url = f"https://epic.gsfc.nasa.gov/archive/natural/{image_date}/png/{image_name}.png"
