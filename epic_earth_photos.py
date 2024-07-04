@@ -7,7 +7,7 @@ from image_utils import get_image_extension
 
 def load_nasa_api_key():
     load_dotenv('.env')
-    return os.getenv('NASA_API')
+    return os.getenv('nasa_api_key')
 
 def get_epic_images_url(api_key):
     base_url = "https://api.nasa.gov/EPIC/api/natural/images"
@@ -43,11 +43,11 @@ def get_epic_earth_photos(api_key, output_folder, num_photos=10):
         print(f"Ошибка при получении данных: {e}")
 
 def main():
-    load_dotenv('nasa_api.env')
-    NASA_API_KEY = load_nasa_api_key()
+    load_dotenv('.env')
+    nasa_api_key = load_nasa_api_key()
     output_folder = "downloaded_images/earth"
     num_photos = 10
-    get_epic_earth_photos(NASA_API_KEY, output_folder, num_photos)
+    get_epic_earth_photos(nasa_api_key, output_folder, num_photos)
 
 if __name__ == "__main__":
     main()
