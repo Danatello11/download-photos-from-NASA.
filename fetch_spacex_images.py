@@ -18,11 +18,9 @@ def save_spacex_images(images, output_folder):
 
 def fetch_spacex_last_launch(launch_id=None):
     base_url = "https://api.spacexdata.com/v5/launches"
-    url = f"{base_url}/{launch_id}" if launch_id else f"{base_url}/latest"
-    
+    url = f"{base_url}/{launch_id or 'latest'}"  
     response = requests.get(url)
     launch = response.json()
-    
     links = launch.get("links", {})
     images = []
     if 'flickr' in links and links["flickr"].get("original"):
