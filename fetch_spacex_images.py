@@ -20,21 +20,17 @@ def fetch_spacex_last_launch(launch_id=None):
     base_url = "https://api.spacexdata.com/v5/launches"
     url = f"{base_url}/{launch_id}" if launch_id else f"{base_url}/latest"
     
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        launch_data = response.json()
-        
-        links = launch_data.get("links", {})
-        images = []
-        if 'flickr' in links and links["flickr"].get("original"):
-            images = links["flickr"]["original"]
-        elif 'patch' in links and (links["patch"].get("large") or links["patch"].get("small")):
-            images = [links["patch"].get("large") or links["patch"].get("small")]
+    response = requests.get(url)
+    launch_data = response.json()
+    
+    links = launch_data.get("links", {})
+    images = []
+    if 'flickr' in links and links["flickr"].get("original"):
+        images = links["flickr"]["original"]
+    elif 'patch' in links and (links["patch"].get("large") or links["patch"].get("small")):
+        images = [links["patch"].get("large") or links["patch"].get("small")]
 
-        save_spacex_images(images, "downloaded_images/spacex")
-    except requests.exceptions.RequestException as e:
-        print(f"Error fetching data: {e}")
+    save_spacex_images(images, "downloaded_images/spacex")
 
 def main():
     parser = argparse.ArgumentParser(description="Fetch SpaceX launch images")

@@ -17,22 +17,18 @@ def save_earth_photos(epic_images_data, num_photos, output_folder, api_key):
     }
     url = f"{base_url}?{urllib.parse.urlencode(params)}"
     
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-        epic_images_data = response.json()
-        
-        for index, image_info in enumerate(epic_images_data[:num_photos], start=1):
-            image_date = image_info["date"].split()[0].replace("-", "/")
-            image_name = image_info["image"]
-            image_url = f"https://epic.gsfc.nasa.gov/archive/natural/{image_date}/png/{image_name}.png"
-            extension = get_image_extension(image_url)
-            file_path = os.path.join(output_folder, f"earth_photo_{index}{extension}")
-            download_image(image_url, file_path)
-            print(f"Фотография Земли {index} сохранена: {file_path}")
+    response = requests.get(url)
+    response.raise_for_status()
+    epic_images_data = response.json()
     
-    except requests.exceptions.RequestException as e:
-        print(f"Ошибка при получении данных: {e}")
+    for index, image_info in enumerate(epic_images_data[:num_photos], start=1):
+        image_date = image_info["date"].split()[0].replace("-", "/")
+        image_name = image_info["image"]
+        image_url = f"https://epic.gsfc.nasa.gov/archive/natural/{image_date}/png/{image_name}.png"
+        extension = get_image_extension(image_url)
+        file_path = os.path.join(output_folder, f"earth_photo_{index}{extension}")
+        download_image(image_url, file_path)
+        print(f"Фотография Земли {index} сохранена: {file_path}")
 
 def main():
     load_dotenv('.env')
