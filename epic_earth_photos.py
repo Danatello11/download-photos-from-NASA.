@@ -6,7 +6,7 @@ from image_utils import download_image
 from image_utils import get_image_extension
 
 def load_nasa_api_key():
-    load_dotenv('nasa_api.env')
+    load_dotenv('.env')
     return os.getenv('NASA_API')
 
 def get_epic_images_url(api_key):
