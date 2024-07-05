@@ -37,7 +37,7 @@ def save_earth_photos(epic_images, output_folder):
 
 def main():
     load_dotenv('.env')
-    nasa_api_key = os.getenv('nasa_api')
+    nasa_api_key = os.getenv('NASA_API')
     output_folder = "downloaded_images/earth"
     num_photos = 10
     epic_images = fetch_epic_images(nasa_api_key)[:num_photos]
