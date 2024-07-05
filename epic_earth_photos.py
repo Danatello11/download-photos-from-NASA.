@@ -1,7 +1,6 @@
 import os
 import requests
 from dotenv import load_dotenv
-import urllib.parse
 from image_utils import download_image, get_image_extension
 
     
@@ -19,12 +18,7 @@ def fetch_epic_images(api_key):
 
 
 def save_earth_photos(epic_images, output_folder):
-    if not epic_images:
-        print("Не удалось получить данные о фотографиях Земли.")
-        return
-    
     os.makedirs(output_folder, exist_ok=True)
-    
     for index, image_info in enumerate(epic_images, start=1):
         image_date = image_info["date"].split()[0].replace("-", "/")
         image_name = image_info["image"]
