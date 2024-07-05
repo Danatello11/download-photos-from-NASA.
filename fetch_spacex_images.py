@@ -5,10 +5,6 @@ from image_utils import download_image
 
 
 def save_spacex_images(images, output_folder):
-    if not images:
-        print("No valid images found for this SpaceX launch.")
-        return
-
     os.makedirs(output_folder, exist_ok=True)
     print(f"Found {len(images)} images")
     for index, image_url in enumerate(images):
