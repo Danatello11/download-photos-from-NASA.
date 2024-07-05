@@ -39,8 +39,8 @@ def main():
     load_dotenv('.env')
     nasa_api_key = os.getenv('NASA_API')
     output_folder = "downloaded_images/earth"
-    num_photos = 10
-    epic_images = fetch_epic_images(nasa_api_key)[:num_photos]
+    photos_num = 10
+    epic_images = fetch_epic_images(nasa_api_key)[:photos_num]
     save_earth_photos(epic_images, output_folder)
 
 if __name__ == "__main__":

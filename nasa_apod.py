@@ -13,8 +13,8 @@ def load_nasa_api_key():
 
 def fetch_nasa_apod(NASA_API):
     url = "https://api.nasa.gov/planetary/apod"
-    NUM_PHOTOS = 30
-    params = {"api_key": NASA_API, "count": NUM_PHOTOS}
+    photos_num = 30
+    params = {"api_key": NASA_API, "count": photos_num}
     response = requests.get(url, params=params)
     response.raise_for_status()
     images = response.json()
