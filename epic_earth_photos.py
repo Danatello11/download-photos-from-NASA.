@@ -3,8 +3,6 @@ import requests
 from dotenv import load_dotenv
 from image_utils import download_image, get_image_extension
 
-    
-
 def fetch_epic_images(api_key):
     url = "https://api.nasa.gov/EPIC/api/natural/images"
     params = {'api_key': api_key}
@@ -19,9 +17,9 @@ def fetch_epic_images(api_key):
 
 def save_earth_photos(epic_images, output_folder):
     os.makedirs(output_folder, exist_ok=True)
-    for index, image_info in enumerate(epic_images, start=1):
-        image_date = image_info["date"].split()[0].replace("-", "/")
-        image_name = image_info["image"]
+    for index, earth_image in enumerate(epic_images, start=1):
+        image_date = earth_image["date"].split()[0].replace("-", "/")
+        image_name = earth_image["image"]
         image_url = f"https://epic.gsfc.nasa.gov/archive/natural/{image_date}/png/{image_name}.png"
         extension = get_image_extension(image_url)
         file_path = os.path.join(output_folder, f"earth_photo_{index}{extension}")
