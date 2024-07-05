@@ -2,3 +2,4 @@ install os
 install requests
 install schedule
 install python-telegram-bot v13.11
+install python-dotenv
