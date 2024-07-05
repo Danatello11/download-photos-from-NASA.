@@ -30,8 +30,8 @@ def publish_photos(bot_token, group_chat_id, publication_interval, directory):
 
 def main():
     load_dotenv()
-    bot_token = os.getenv("BOT_TOKEN")
-    group_chat_id = os.getenv("GROUP_CHAT_ID")
+    bot_token = os.getenv("TG_BOT_TOKEN")
+    group_chat_id = os.getenv("TG_GROUP_CHAT_ID")
     publication_interval = int(os.getenv("PUBLICATION_INTERVAL", 4))
     directory = "path_to_your_image_directory"
     schedule.every(publication_interval).hours.do(publish_photos, bot_token, group_chat_id, publication_interval, directory)

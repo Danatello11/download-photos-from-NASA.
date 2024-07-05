@@ -11,10 +11,8 @@ def fetch_nasa_apod(api_key):
     response = requests.get(url, params=params)
     response.raise_for_status()
     images = response.json()
-    
     folder_path = "downloaded_images/nasa"
     os.makedirs(folder_path, exist_ok=True)
-    
     for index, image in enumerate(images):
         image_url = image["url"]
         if "youtube" in image_url:
