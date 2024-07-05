@@ -11,8 +11,11 @@ def fetch_epic_images(api_key):
     params = {'api_key': api_key}
     
     response = requests.get(url, params=params)
-    response.raise_for_status()
-    return response.json()
+    if response.ok:
+        return response.json()
+    else:
+        print(f"Ошибка при получении данных: {response.status_code}")
+        return []
 
 
 def save_earth_photos(epic_images, output_folder):
