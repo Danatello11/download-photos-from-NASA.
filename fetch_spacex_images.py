@@ -12,25 +12,31 @@ def save_spacex_images(images, output_folder):
         download_image(image_url, filename)
         print(f"SpaceX image saved: {filename}")
 
+
 def fetch_spacex_last_launch(launch_id=None):
     base_url = "https://api.spacexdata.com/v5/launches"
-    url = f"{base_url}/{launch_id or 'latest'}"  
+    url = f"{base_url}/{launch_id or 'latest'}"
     response = requests.get(url)
     launch = response.json()
     links = launch.get("links", {})
     images = []
+
     if 'flickr' in links and links["flickr"].get("original"):
         images = links["flickr"]["original"]
     elif 'patch' in links and (links["patch"].get("large") or links["patch"].get("small")):
         images = [links["patch"].get("large") or links["patch"].get("small")]
 
-    save_spacex_images(images, "downloaded_images/spacex")
+    return images
+
 
 def main():
     parser = argparse.ArgumentParser(description="Fetch SpaceX launch images")
     parser.add_argument('--launch_id', help="ID of the SpaceX launch", default='latest')
     args = parser.parse_args()
-    fetch_spacex_last_launch(args.launch_id)
+    
+    images = fetch_spacex_last_launch(args.launch_id)
+    save_spacex_images(images, "downloaded_images/spacex")
+
 
 if __name__ == "__main__":
     main()
