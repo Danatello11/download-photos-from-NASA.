@@ -1,25 +1,20 @@
-import requests
 import os
+import requests
 from dotenv import load_dotenv
-from image_utils import download_image
-from image_utils import get_image_extension
+from image_utils import download_image, get_image_extension
 
 
-def load_nasa_api_key():
-    load_dotenv('nasa_api.env')
-    return os.getenv('NASA_API')
-
-
-
-def fetch_nasa_apod(NASA_API):
+def fetch_nasa_apod(api_key):
     url = "https://api.nasa.gov/planetary/apod"
     photos_num = 30
-    params = {"api_key": NASA_API, "count": photos_num}
+    params = {"api_key": api_key, "count": photos_num}
     response = requests.get(url, params=params)
     response.raise_for_status()
     images = response.json()
+    
     folder_path = "downloaded_images/nasa"
     os.makedirs(folder_path, exist_ok=True)
+    
     for index, image in enumerate(images):
         image_url = image["url"]
         if "youtube" in image_url:
@@ -30,9 +25,10 @@ def fetch_nasa_apod(NASA_API):
         download_image(image_url, filename)
         print(f"Фотография NASA сохранена: {filename}")
 
-def main(): 
-    NASA_API = load_nasa_api_key()
-    fetch_nasa_apod(NASA_API)  
+def main():
+    load_dotenv('.env')
+    api_key = os.getenv('NASA_API')
+    fetch_nasa_apod(api_key)
 
 if __name__ == "__main__":
     main()
