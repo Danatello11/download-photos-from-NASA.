@@ -2,22 +2,18 @@ import os
 import requests
 from dotenv import load_dotenv
 import urllib.parse
-from image_utils import download_image
-from image_utils import get_image_extension
+from image_utils import download_image, get_image_extension
+
+    
 
 def fetch_epic_images(api_key):
-    base_url = "https://api.nasa.gov/EPIC/api/natural/images"
-    params = {
-        'api_key': api_key
-    }
-    url = f"{base_url}?{urllib.parse.urlencode(params)}"
+    url = "https://api.nasa.gov/EPIC/api/natural/images"
+    params = {'api_key': api_key}
     
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        print(f"Ошибка при получении данных: {response.status_code}")
-        return []
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    return response.json()
+
 
 def save_earth_photos(epic_images, output_folder):
     if not epic_images:
