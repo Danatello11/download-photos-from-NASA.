@@ -25,7 +25,7 @@ def fetch_nasa_apod(api_key):
 
 def main():
     load_dotenv('.env')
-    api_key = os.getenv('NASA_API')
+    api_key = os.getenv('NASA_API_KEY')
     fetch_nasa_apod(api_key)
 
 if __name__ == "__main__":
