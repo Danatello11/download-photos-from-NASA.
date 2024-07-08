@@ -26,8 +26,8 @@
     Добавьте в файл `.env` следующие переменные окружения:
 
     ```env
-    BOT_TOKEN=Ваш_Telegram_Bot_Token
-    GROUP_CHAT_ID=Ваш_ID_группы_или_канала
+    TG_BOT_TOKEN=Ваш_Telegram_Bot_Token
+    TG_GROUP_CHAT_ID=Ваш_ID_группы_или_канала
     PUBLICATION_INTERVAL=4  # Интервал публикации в часах (по умолчанию 4 часа)
     NASA_API_KEY=Ваш_API_ключ
     ```
@@ -72,7 +72,7 @@ NASA_API_KEY=Ваш_API_ключ
 ## Использование
 
 1. **Проверка переменных окружения:**
-    Убедитесь, что файл `.env` содержит правильные значения для `BOT_TOKEN`, `GROUP_CHAT_ID` и `PUBLICATION_INTERVAL`.
+    Убедитесь, что файл `.env` содержит правильные значения для `TG_BOT_TOKEN`, `TG_GROUP_CHAT_ID`, `PUBLICATION_INTERVAL` и `NASA_API_KEY`.
 
 2. **Запуск скрипта для публикации фотографий:**
 
